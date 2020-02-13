@@ -1,14 +1,42 @@
-// Import the express framework for our node server
 const express = require('express');
-// Import the path module from node to create absolute file paths for express static
 const path = require('path');
+const bodyParser = require('body-parser');
+const db = require('../database/index');
 
-// Instantiate the express server
 const app = express();
-// Set a constant for the port that our express server will listen on
+app.use(bodyParser.json());
 const PORT = 3000;
 
-// Serve static files. Any requests for specific files will be served if they exist in the provided folder
 app.use(express.static(path.join(__dirname, '../client/dist')));
-// Start the server on the provided port
-app.listen(PORT, () => console.log('Listening on port: ' + PORT));
+app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
+
+const getUsers = (req, res) => {
+  db.query('SELECT * FROM account', (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result.rows);
+    }
+  });
+};
+
+const addUser = (req, res) => {
+  const userInfo = req.body;
+  db.query(`INSERT INTO account (user_id, name, fact) VALUES (3, '${userInfo.name}', '${userInfo.fact}');`, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result.rows);
+    }
+  });
+};
+
+app.get('/users', (req, res) => {
+  getUsers(req, res);
+});
+
+app.post('/user', (req, res) => {
+  addUser(req, res);
+});
+
+// module.exports = getUsers;
