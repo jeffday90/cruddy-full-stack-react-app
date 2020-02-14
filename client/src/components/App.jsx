@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
+import socketIOClient from 'socket.io-client';
 import UserStream from './UserStream.jsx';
 
 class App extends Component {
@@ -9,6 +10,7 @@ class App extends Component {
       name: '',
       fact: '',
       users: [],
+      endpoint: 'http://127.0.0.1:3000',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -16,6 +18,12 @@ class App extends Component {
 
   componentDidMount() {
     this.grabUsers();
+
+    const { endpoint } = this.state;
+    const socket = socketIOClient(endpoint);
+    socket.on('fromDB', (data) => {
+      this.setState({ users: data });
+    });
   }
 
   grabUsers() {
@@ -66,7 +74,7 @@ class App extends Component {
         >
           <label>
             Name:
-            <input type="text" name="name" onChange={this.handleChange}  />
+            <input type="text" name="name" onChange={this.handleChange} />
           </label>
           <label>
             Your little fact:

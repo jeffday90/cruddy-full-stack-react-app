@@ -1,12 +1,16 @@
 import React from 'react';
 import UserStreamEntry from './UserStreamEntry.jsx';
 
-const ShowStream = (props) => (
+const ShowStream = ({ users }) => (
   <div>
     <div>
-      {props.users.map((user) => <UserStreamEntry key={user.id} user={user} />)}
+      {users.map((user) => <UserStreamEntry key={user.id} user={user} />)}
     </div>
   </div>
 );
+
+// ShowStream.propTypes = {
+//   users: React.propTypes.string.isRequired,
+// };
 
 export default ShowStream;
