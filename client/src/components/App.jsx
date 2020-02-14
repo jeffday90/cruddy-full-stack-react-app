@@ -23,7 +23,7 @@ class App extends Component {
       .then((result) => {
         this.setState({
           users: result.data,
-        }, () => console.log(this.state));
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -60,10 +60,13 @@ class App extends Component {
       <div>
         <h1>Hello welcome to this basic cruddy app!!!</h1>
         <UserStream users={users} />
-        <form onSubmit={this.handleSubmit}>
+        <form
+          onSubmit={this.handleSubmit}
+          style={{ textAlign: 'center' }}
+        >
           <label>
             Name:
-            <input type="text" name="name" onChange={this.handleChange} />
+            <input type="text" name="name" onChange={this.handleChange}  />
           </label>
           <label>
             Your little fact:
