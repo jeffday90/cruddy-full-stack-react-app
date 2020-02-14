@@ -12,7 +12,7 @@ const getUsers = (req, res) => {
 
 const addUser = (req, res) => {
   const userInfo = req.body;
-  db.query(`INSERT INTO account (user_id, name, fact) VALUES (3, '${userInfo.name}', '${userInfo.fact}');`, (err, result) => {
+  db.query(`INSERT INTO account (name, fact) VALUES ('${userInfo.name}', '${userInfo.fact}');`, (err, result) => {
     if (err) {
       console.log(err);
     } else {
