@@ -37,8 +37,8 @@ class UserStreamEntry extends React.Component {
 
   deleteMember(e) {
     e.preventDefault();
-    const { name } = this.props.user;
-    Axios.delete('/removeUser', { data: { name } })
+    const { id } = this.props.user;
+    Axios.delete('/removeUser', { data: { id } })
       .then((result) => {
         console.log(result);
       })

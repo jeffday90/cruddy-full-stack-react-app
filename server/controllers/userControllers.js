@@ -11,8 +11,8 @@ const getUsers = (req, res) => {
 };
 
 const addUser = (req, res) => {
-  const userInfo = req.body;
-  db.query(`INSERT INTO account (name, fact) VALUES ('${userInfo.name}', '${userInfo.fact}');`, (err, result) => {
+  const { fact, name } = req.body;
+  db.query(`INSERT INTO account (name, fact) VALUES ('${name}', '${fact}');`, (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -22,9 +22,8 @@ const addUser = (req, res) => {
 };
 
 const editFact = (req, res) => {
-  const userInfo = req.body;
-  console.log(req.body);
-  db.query(`UPDATE account SET fact= '${userInfo.editedFact}' WHERE name= '${userInfo.name}';`, (err, result) => {
+  const { editedFact, name } = req.body;
+  db.query(`UPDATE account SET fact= '${editedFact}' WHERE name= '${name}';`, (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -34,8 +33,8 @@ const editFact = (req, res) => {
 };
 
 const removeUser = (req, res) => {
-  console.log('in req.body', req.body.name);
-  db.query(`DELETE from account WHERE name= '${req.body.name}';`, (err, result) => {
+  const { id } = req.body;
+  db.query(`DELETE from account WHERE id= '${id}';`, (err, result) => {
     if (err) {
       console.log(err);
     } else {
