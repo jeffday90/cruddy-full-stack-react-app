@@ -22,6 +22,7 @@ class App extends Component {
     const { endpoint } = this.state;
     const socket = socketIOClient(endpoint);
     socket.on('fromDB', (data) => {
+      data.sort((a, b) => b.id - a.id);
       this.setState({ users: data });
     });
   }
@@ -29,6 +30,7 @@ class App extends Component {
   grabUsers() {
     Axios.get('/users')
       .then((result) => {
+        result.data.sort((a, b) => b.id - a.id);
         this.setState({
           users: result.data,
         });

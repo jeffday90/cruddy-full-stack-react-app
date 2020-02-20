@@ -2,16 +2,22 @@
 /* eslint-disable react/button-has-type */
 import React from 'react';
 import Axios from 'axios';
+import searchYoutube from '../../../server/api/search';
 
 class UserStreamEntry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       editedFact: '',
+      video: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.deleteMember = this.deleteMember.bind(this);
+  }
+
+  componentDidMount() {
+    this.searchFactOnYoutube();
   }
 
   handleChange(e) {
@@ -46,6 +52,12 @@ class UserStreamEntry extends React.Component {
         console.log(err);
       });
   }
+
+  searchFactOnYoutube() {
+    const { fact } = this.props.user;
+    searchYoutube(fact, (data) => console.log(data));
+  }
+
 
   render() {
     const { name, fact } = this.props.user;
